@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Search API</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href=https://use.fontawesome.com/releases/v5.7.1/css/all.css>
+</head>
+<body style="background-color:gainsboro">
+    <div class="container">
+        <h1 class="text-center mt-5">Movie Search App</h1>
+        <form id="MovieForm" autocomplete="off">
+            <div class="group">
+            <label for="movie">Movie Name</label>
+            <input classs="form-control" type="text" id="movie" placeholder="Movie Name......">
+            <label for="year">Year</label>
+            <input classs="form-control" type="number" id="Year" placeholder="Year....">
+        </div>
+        <div class="group">
+            <center><button class="btn btn-primary" style="background-color: grey">
+                Search Movie
+                </button></center>
+        </div>
+        </form>
+        
+
+    <div id="result">
+        </div>
+        <div id="empty">
+        </div>
+    </div>
+    
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        var apikey="db3ca119"
+
+        $("#MovieForm").submit(function(event){
+            event.preventDefault()
+
+            var movie= $("#movie").val()
+            var year= $("#year").val()
+
+            var result=""
+
+            var url="http://www.omdbapi.com/?apikey="+apikey
+
+            $.ajax({
+                method:'GET',
+                url:url+"&t="+movie+"&y="+year,
+                success:function(data){
+                    console.log(data);
+
+                    result=`
+                    <img style="float:left" class="img-thumbnail" width="200" heigth="200" src="${data.Poster}"/>
+                    <h2>${data.Title}</h2>
+                    <h2>${data.Year}</h2>
+                    <h2>${data.Released}</h2>
+                    <h2>${data.Runtime}</h2>
+                    <h2>${data.Actors}</h2>
+                    <h2>${data.Genre}</h2>
+                    <h2>${data.Director}</h2>
+
+
+                    `;
+                $("#result").html(result);
+                }
+            })
+
+        })
+    })
+</script>
+</html>
